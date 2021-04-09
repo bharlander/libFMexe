@@ -258,6 +258,9 @@ libFM.default <- function(train, test, global_bias = TRUE, variable_bias = TRUE,
   testloc = paste0(tempfile(), "libFMtest.txt")
   outloc = paste0(tempfile(), "out.txt")
   modelloc = paste0(tempfile(), "model.txt")
+  
+  print("MODEL LOC")
+  print(modelloc)
 
   write.table(train, file = trainloc, col.names = FALSE, row.names = FALSE, quote = FALSE)
   write.table(test, file = testloc, col.names = FALSE, row.names = FALSE, quote = FALSE)
@@ -306,6 +309,9 @@ libFM.default <- function(train, test, global_bias = TRUE, variable_bias = TRUE,
                      " -seed ", seed)
   }
 
+  print("libFM COMMAND")
+  print(command)
+  
   out = system(command, intern = verbosity <= 0)
 
   pred_libFM = read.table(outloc, header = FALSE)$V1
