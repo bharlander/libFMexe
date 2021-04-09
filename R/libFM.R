@@ -216,7 +216,7 @@ libFM.dgCMatrix <- function(train, test, y_train, y_test,
 libFM.default <- function(train, test, global_bias = TRUE, variable_bias = TRUE, dim = 8,
                 task = c("c", "r"), method = c("mcmc", "sgd", "als", "sgda"),
                 init_stdev = 0.1, regular = c(0, 0, 0), learn_rate = 0.1, validation,
-                verbosity = 0, iter = 100, exe_loc, grouping, seed = NULL, model_save_loc, ...) {
+                verbosity = 0, iter = 100, exe_loc, grouping, seed = NULL, ...) {
   method = match.arg(method)
   task = match.arg(task)
   if (missing(exe_loc)) {
@@ -257,6 +257,7 @@ libFM.default <- function(train, test, global_bias = TRUE, variable_bias = TRUE,
   trainloc = paste0(tempfile(), "libFMtrain.txt")
   testloc = paste0(tempfile(), "libFMtest.txt")
   outloc = paste0(tempfile(), "out.txt")
+  modelloc = paste0(tempfile(), "model.txt")
 
   write.table(train, file = trainloc, col.names = FALSE, row.names = FALSE, quote = FALSE)
   write.table(test, file = testloc, col.names = FALSE, row.names = FALSE, quote = FALSE)
@@ -271,7 +272,7 @@ libFM.default <- function(train, test, global_bias = TRUE, variable_bias = TRUE,
                    " -out ", outloc,
                    " -iter ", iter,
                    " -dim ", dim_txt,
-                   " -save_model", model_save_loc)
+                   " -save_model ", modelloc)
   if (method %in% c("sgd", "als")) {
     command = paste0(command,
                      " -regular \'", regular_txt, "\'")
